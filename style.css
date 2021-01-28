@@ -1,0 +1,19 @@
+.myH1 {
+    font-family: 'Raleway', sans-serif;
+}
+
+.searchSection, .displaySection {
+    background-color: rgb(185, 228, 241);
+}
+
+.myBtn {
+    background-color: rgb(9, 49, 87);
+    color: white;
+}
+
+.myBtn:hover {
+    background-color: rgb(128, 189, 207);
+    color: black;
+}
+
+

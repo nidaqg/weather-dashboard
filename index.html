@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Weather Dashboard</title>
+        <!--link reset css, local css, bootstrap and google fonts-->
+        <link rel="stylesheet" href="reset.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com"> 
+        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <header>
+            <nav class="navbar navbar-dark bg-dark">
+                <section class="container-fluid justify-content-center">
+                  <h1 class="navbar-text text-white myH1 text-center">Weather Dashboard</h1>
+                </section>
+              </nav>
+        </header>
+        <main class="container">
+            <section class="row">
+                <!--section for input to search for city + list of previous searched cities-->
+                <section class="col-3 border border-dark mt-3 mb-3 searchSection">
+                          <h5 class="myH1 text-center mt-2">Enter city name to check the Weather!</h5>
+                            <form class="d-flex mb-3 mt-3">
+                                <input class="form-control me-2" type="search" id="cityNameInput" placeholder="City Name" aria-label="Search">
+                                <button class="btn myBtn btn-dark" id="searchButton" type="submit">Search</button>
+                            </form>
+                              <section class="mb-3">
+                                <section class="list-group savedList">
+                                <!--   <a href="#" class="list-group-item list-group-item-action"></a>
+                                    <a href="#" class="list-group-item list-group-item-action"></a>
+                                    <a href="#" class="list-group-item list-group-item-action"></a>
+                                    <a href="#" class="list-group-item list-group-item-action"></a>
+                                    <a href="#" class="list-group-item list-group-item-action"></a> -->
+                                </section>
+                              </section>
+                </section>
+
+             <!--section for current and future weather for searched city-->
+                <section class="col-9 border border-dark mt-3 mb-3 displaySection">
+                    <h3 class="myH1 text-center mt-2">Weather</h3>
+                    <section id="cityCurrent"></section>
+                    <section id="theIcon"></section>
+                    <section class="cityForecast">
+
+                      
+                    </section>
+                </section>
+
+            </section>
+
+        </main>
+
+
+    <!--scripts for bootstrap, jquery and local javascript-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="script.js"></script>
+    </body>
+</html>
