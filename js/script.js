@@ -1,9 +1,9 @@
 
-  var cityList = []
+  //var cityList = []
 
 
 $(document).ready(function(){
-
+  //dynamically create elements to hold weather data
     var theCity = $("<p>").addClass("theCity myH1 h4");
     $("#cityCurrent").append(theCity);
 
@@ -32,13 +32,15 @@ $(document).ready(function(){
     //var pastSearch = JSON.parse(localStorage.getItem("cityList"))
     //console.log(pastSearch)
 
-
+//add click event to button
 $("#searchButton").click(function(event){
     event.preventDefault()
+    //if function to check if iput field empty or not.Else statement to clear previous data from elements
     if($("#cityNameInput").val() === '') {
       alert("You must enter a city name to proceed!")
       return
     } else {
+    $(".cityForecast").empty();
     getWeather()
     }
 })
@@ -51,20 +53,27 @@ function getWeather(cityName) {
     //cityList.push(cityName)
    // localStorage.setItem("cityList", JSON.stringify(cityList))
 
-
     console.log(cityName)
     var baseUrl = "https://api.openweathermap.org/data/2.5/weather?q="
     var apiKey = "&appid=cd6b6224a3720446eb55826fcfd4a40a"
     var completeUrl = baseUrl+cityName+"&units=imperial"+apiKey
 
+    //fetch function to retrieve weather data from openweather
     fetch(completeUrl)  
-    .then(function(response) { 
-        // Convert data to json
-        return response.json() 
-     }) 
-    .then(function(data) {
-      console.log(data);
-      
+    .then(function(response) {
+      if (response.ok) {
+        response.json()
+        .then (function(data) {
+          console.log(data);
+          displayWeather(data, cityName);
+        })
+      } else {
+        alert("City not found, please try again");
+      }
+    }) 
+    //.then(function(data) {
+    //  console.log(data);
+      var displayWeather = function (data, cityName) {
     // get UNIX date from API and convert to readable date format
      var dataDate = data.dt*1000;
      var date = new Date(dataDate);
@@ -147,7 +156,7 @@ function getWeather(cityName) {
     
   })
 
-  })
+  }
 }
 
 
