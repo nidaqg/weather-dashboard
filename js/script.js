@@ -23,7 +23,9 @@ $(document).ready(function(){
     $("#cityCurrent").append(windSpeed);
 
     var uvIndex = $("<p>").addClass("uV");
+    var uvIndicator = $("<span>").addClass("uvIndicator");
     $("#cityCurrent").append(uvIndex);
+    $("#cityCurrent").append(uvIndicator);
 
     var forecastHeading = $("<p>").addClass("h3 myH1 text-center mt-2 forecastHeading");
     $("#fHeading").append(forecastHeading);
@@ -113,6 +115,18 @@ function getWeather(cityName) {
     console.log(data);
     //display uv index to webpage
     $(".uV").text("UV Index: " + data.current.uvi)
+//0-2 is low risk, 3-7 is moderate risk and 8+ is high risk
+    if (data.current.uvi <= 2) {
+      $(".uvIndicator").addClass("lowUv")
+      $(".uvIndicator").text(" (Low risk)")
+    } else if (data.current.uvi > 2 && data.current.uvi <8) {
+      $(".uvIndicator").addClass("moderateUv")
+      $(".uvIndicator").text(" (Moderate risk)")
+    } else {
+      $(".uvIndicator").addClass("HighUv")
+      $(".uvIndicator").text(" (High risk)")
+    }
+    
 
     $(".forecastHeading").text("5-Day Forecast");
 
