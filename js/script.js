@@ -24,6 +24,9 @@ $(document).ready(function(){
 
     var uvIndex = $("<p>").addClass("uV");
     $("#cityCurrent").append(uvIndex);
+
+    var forecastHeading = $("<p>").addClass("h3 myH1 text-center mt-2 forecastHeading");
+    $("#fHeading").append(forecastHeading);
     
     
     //var pastSearch = JSON.parse(localStorage.getItem("cityList"))
@@ -86,8 +89,6 @@ function getWeather(cityName) {
 
     $(".theWind").text("Wind Speed: " + data.wind.speed)
 
-    $(".cityForecast").addClass("border-top border-dark")
-
    //declare variables to hold city longitude and lattitude values
     var cityLong = data.coord.lon
     var cityLat = data.coord.lat
@@ -104,7 +105,10 @@ function getWeather(cityName) {
     //display uv index to webpage
     $(".uV").text("UV Index: " + data.current.uvi)
 
+    $(".forecastHeading").text("5-Day Forecast");
+
     console.log(data.daily)
+
     //for loop to loop through daily forecast data and display temperature, date, humidity + icon
       for(i=1; i<6; i++){
 
@@ -117,22 +121,27 @@ function getWeather(cityName) {
 
         var newIconcode = data.daily[i].weather[0].icon
 
-        var newDate = $("<p>").addClass("forecastDate");
-        $(".cityForecast").append(newDate);
+        var newDate = $("<h5>");
 
-       var newIcon = $("<img>").addClass("forecastIcon");
-       $(".cityForecast").append(newIcon);
+       var newIcon = $("<img>");
 
-       var newTemp = $("<p>").addClass("forecastTemp");
-       $(".cityForecast").append(newTemp);
+       var newTemp = $("<p>");
 
-       var newHumidity = $("<p>").addClass("forecastHumidity");
-       $(".cityForecast").append(newHumidity);
+       var newHumidity = $("<p>");
 
-        newDate.text('Date: ' + forecastDate)
-        newIcon.attr("src", "https://openweathermap.org/img/w/"+newIconcode+".png")
-        newTemp.text('Temperature: ' + data.daily[i].temp.day + ' F')
-        newHumidity.text('Humidity: ' + data.daily[i].humidity)
+        newDate.text(forecastDate);
+        newIcon.attr("src", "https://openweathermap.org/img/w/"+newIconcode+".png");
+        newTemp.text('Temperature: ' + data.daily[i].temp.day + ' F');
+        newHumidity.text('Humidity: ' + data.daily[i].humidity);
+
+
+        var forecastCard = $("<div>").addClass("card m-2 text-center")
+        var cardBody = $("<div>").addClass("card-body p-3")
+
+        cardBody.append(newDate, newIcon, newTemp, newHumidity);
+        forecastCard.append(cardBody);
+        $(".cityForecast").append(forecastCard);
+
  
     }
     
