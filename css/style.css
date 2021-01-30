@@ -18,6 +18,7 @@
 
 .lowUv {
     background-color: green;
+    color: white;
     padding: 5px;
 }
 
@@ -28,6 +29,7 @@
 
 .highUv {
     background-color: rgb(184, 8, 8);
+    color: white;
     padding: 5px;
 }
 
