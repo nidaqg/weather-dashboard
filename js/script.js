@@ -25,12 +25,18 @@ $(document).ready(function(){
     if(localStorage ["cityList"]) {
       cityList = JSON.parse(localStorage.getItem("cityList"))
     }
-    //display past searches on webpage
+    //display past searches on webpage, make displayed list clickable
     if(cityList.length){
       for (i=0; i < cityList.length; i++) {
       var pastCities = $("<a>").addClass("list-group-item list-group-item-action");
-      pastCities.attr("href", "#")
-      pastCities.text(cityList[i])
+      pastCities.text(cityList[i]);
+      pastCities.click(function(event) {
+        event.preventDefault()
+        $(".cityForecast").empty();
+        $(".uvIndicator").removeClass("lowUv moderateUv highUv")
+        var cityName = event.target.text
+        getWeather(cityName);
+      })
       $("#savedList").append(pastCities);
       }
     }
@@ -45,15 +51,15 @@ $("#searchButton").click(function(event){
     } else {
     $(".cityForecast").empty();
     $(".uvIndicator").removeClass("lowUv moderateUv highUv")
-    getWeather()
+    var cityName = $("#cityNameInput").val()
+    getWeather(cityName);
     }
 })
     
 });
 
 function getWeather(cityName) {
-    //declare variables for city name from user input
-    var cityName = $("#cityNameInput").val()
+    //Call function to save city name to local storage
     savedSearch(cityName);
    
     console.log(cityName)
@@ -168,7 +174,7 @@ function getWeather(cityName) {
 //Function to save searched cities to local storage. Made max length of stored cities
 //6 for styling purposes, + added code to not save searched city of it already exists in storage
 function savedSearch(cityName) {
-
+  if (cityName !== "") {
   if (cityList.indexOf(cityName) == -1) {
     cityList.unshift(cityName);
     if(cityList.length > 6) {
@@ -177,5 +183,5 @@ function savedSearch(cityName) {
     localStorage["cityList"] = JSON.stringify(cityList);
   }
 }
-
+}
 
