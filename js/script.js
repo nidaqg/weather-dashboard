@@ -4,28 +4,20 @@
 
 $(document).ready(function(){
   //dynamically create elements to hold weather data
+    var currentBox = $("<div>").addClass("card text-center border m-4 border-dark border-3")
+    var ccBody = $("<div>").addClass("card-body p-3")
     var theCity = $("<p>").addClass("theCity myH1 h4");
-    $("#cityCurrent").append(theCity);
-
     var theDate = $("<p>").addClass("theDate")
-    $("#cityCurrent").append(theDate);
-
      var icon = $("<img>").addClass("theIcon");
-    $("#cityCurrent").append(icon);
-
     var temperature = $("<p>").addClass("theTemp");
-    $("#cityCurrent").append(temperature);
-
     var humidity = $("<p>").addClass("theHum");
-    $("#cityCurrent").append(humidity);
-
     var windSpeed = $("<p>").addClass("theWind");
-    $("#cityCurrent").append(windSpeed);
-
     var uvIndex = $("<p>").addClass("uV");
     var uvIndicator = $("<span>").addClass("uvIndicator")
-    $("#cityCurrent").append(uvIndex);
-    $("#cityCurrent").append(uvIndicator);
+    //append weather data to card, append card to webpage
+    ccBody.append(theCity, theDate, icon, temperature, humidity, windSpeed, uvIndex, uvIndicator)
+    currentBox.append(ccBody)
+    $("#cityCurrent").append(currentBox)
 
     var forecastHeading = $("<p>").addClass("h3 myH1 text-center mt-2 forecastHeading");
     $("#fHeading").append(forecastHeading);
@@ -37,7 +29,7 @@ $(document).ready(function(){
 //add click event to button
 $("#searchButton").click(function(event){
     event.preventDefault()
-    //if function to check if iput field empty or not.Else statement to clear previous data from elements
+    //if function to check if input field empty or not.Else statement to clear previous data from elements
     if($("#cityNameInput").val() === '') {
       alert("You must enter a city name to proceed!")
       return
@@ -74,8 +66,7 @@ function getWeather(cityName) {
         alert("City not found, please try again");
       }
     }) 
-    //.then(function(data) {
-    //  console.log(data);
+
       var displayWeather = function (data, cityName) {
     // get UNIX date from API and convert to readable date format
      var dataDate = data.dt*1000;
@@ -86,19 +77,16 @@ function getWeather(cityName) {
      var year = date.getFullYear();
      var formattedDate = '(' + month + '/' + day + '/' + year + ')'
      
+     $("#cityCurrent").removeClass("hidden")
     //retrieve weather icon from API and set to webpage
     var iconcode = data.weather[0].icon;
     $(".theIcon").attr("src", "https://openweathermap.org/img/w/"+iconcode+".png")
-
     $(".theCity").text(cityName)
-
     $(".theDate").text(formattedDate)
 
     //retrieve temperature, humidity and windspeed data and display on webpage
     $(".theTemp").text("temperature: " + data.main.temp + " F")
-
     $(".theHum").text("Humidity: " + data.main.humidity)
-
     $(".theWind").text("Wind Speed: " + data.wind.speed)
 
    //declare variables to hold city longitude and lattitude values
@@ -116,11 +104,11 @@ function getWeather(cityName) {
     console.log(data);
     //display uv index to webpage
     $(".uV").text("UV Index: " + data.current.uvi)
-//0-2 is low risk, 3-7 is moderate risk and 8+ is high risk
+//if function to display different color for low, moderate or high risk UV index
     if (data.current.uvi <= 2) {
       $(".uvIndicator").addClass("lowUv")
       $(".uvIndicator").text(" (UV index is at Low risk)")
-    } else if (data.current.uvi > 2 && data.current.uvi <8) {
+    } else if (data.current.uvi > 2 && data.current.uvi < 8) {
       $(".uvIndicator").addClass("moderateUv")
       $(".uvIndicator").text(" (UV Index is at Moderate risk)")
     } else if (data.current.uvi > 8) {
@@ -135,7 +123,6 @@ function getWeather(cityName) {
 
     //for loop to loop through daily forecast data and display temperature, date, humidity + icon
       for(i=1; i<6; i++){
-
         dateUNIX = data.daily[i].dt*1000
         var date = new Date(dateUNIX);
         var day = date.getDate();
@@ -146,27 +133,23 @@ function getWeather(cityName) {
         var newIconcode = data.daily[i].weather[0].icon
 
         var newDate = $("<h5>");
-
-       var newIcon = $("<img>");
-
-       var newTemp = $("<p>");
-
-       var newHumidity = $("<p>");
+        var newIcon = $("<img>");
+        var newTemp = $("<p>");
+        var newHumidity = $("<p>");
 
         newDate.text(forecastDate);
         newIcon.attr("src", "https://openweathermap.org/img/w/"+newIconcode+".png");
         newTemp.text('Temperature: ' + data.daily[i].temp.day + ' F');
         newHumidity.text('Humidity: ' + data.daily[i].humidity);
 
-
-        var forecastCard = $("<div>").addClass("card m-2 text-center")
+        //Create cards to hold 5 day forecast data, append cards to forecast section
+        var forecastCard = $("<div>").addClass("card m-2 text-center border border-dark border-3")
         var cardBody = $("<div>").addClass("card-body p-3")
 
         cardBody.append(newDate, newIcon, newTemp, newHumidity);
         forecastCard.append(cardBody);
         $(".cityForecast").append(forecastCard);
 
- 
     }
     
   })

@@ -23,7 +23,7 @@
         <main class="container">
           <section class="row">
                 <!--section for input to search for city + list of previous searched cities-->
-                <section class="col-3 border border-dark mt-3 mb-3 searchSection">
+                <section class="col-md-3 border border-dark mt-3 mb-3 searchSection">
                           <h5 class="myH1 text-center mt-2">Enter city name to check the Weather!</h5>
                             <form class="d-flex mb-3 mt-3">
                                 <input class="form-control me-2" type="search" id="cityNameInput" placeholder="City Name" aria-label="Search">
@@ -36,9 +36,9 @@
                 </section>
 
              <!--section for current and future weather for searched city-->
-                <section class="col-9 border border-dark mt-3 mb-3 displaySection">
+                <section class="col-md-9 border border-dark mt-3 mb-3 displaySection">
                     <h3 class="myH1 text-center mt-2">Weather</h3>
-                    <section id="cityCurrent"></section>
+                    <section id="cityCurrent" class="hidden"></section>
 
                     <section>
                         <section id="fHeading"></section>
