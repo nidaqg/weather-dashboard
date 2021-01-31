@@ -32,7 +32,8 @@ $(document).ready(function(){
       pastCities.text(cityList[i]);
       pastCities.click(function(event) {
         event.preventDefault()
-        $(".cityForecast").empty();
+        $(".cityForecast").empty()
+        $("#errorMessage").empty();
         $(".uvIndicator").removeClass("lowUv moderateUv highUv")
         var cityName = event.target.text
         getWeather(cityName);
@@ -46,9 +47,13 @@ $("#searchButton").click(function(event){
     event.preventDefault()
     //if function to check if input field empty or not.Else statement to clear previous data from elements
     if($("#cityNameInput").val() === '') {
-      alert("You must enter a city name to proceed!")
+      $("#cityCurrent").addClass("hidden");
+      $(".cityForecast").empty();
+      $(".uvIndicator").removeClass("lowUv moderateUv highUv")
+      $("#errorMessage").text("You must enter a city name to proceed!");
       return
     } else {
+      $("#errorMessage").empty();
     $(".cityForecast").empty();
     $(".uvIndicator").removeClass("lowUv moderateUv highUv")
     var cityName = $("#cityNameInput").val()
@@ -77,7 +82,10 @@ function getWeather(cityName) {
           displayWeather(data, cityName);
         })
       } else {
-        alert("City not found, please try again");
+        $("#cityCurrent").addClass("hidden");
+        $(".cityForecast").empty();
+        $(".uvIndicator").removeClass("lowUv moderateUv highUv")
+        $("#errorMessage").text("City not found, please try again!");
       }
     }) 
 
