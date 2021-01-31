@@ -1,6 +1,5 @@
-
-  //var cityList = []
-
+//declare array to hold search history to be stored in local storage
+var cityList = [];
 
 $(document).ready(function(){
   //dynamically create elements to hold weather data
@@ -22,9 +21,19 @@ $(document).ready(function(){
     var forecastHeading = $("<p>").addClass("h3 myH1 text-center mt-2 forecastHeading");
     $("#fHeading").append(forecastHeading);
     
-    
-    //var pastSearch = JSON.parse(localStorage.getItem("cityList"))
-    //console.log(pastSearch)
+    //Check to see if search history exists in local storage, retrieve if it exists
+    if(localStorage ["cityList"]) {
+      cityList = JSON.parse(localStorage.getItem("cityList"))
+    }
+    //display past searches on webpage
+    if(cityList.length){
+      for (i=0; i < cityList.length; i++) {
+      var pastCities = $("<a>").addClass("list-group-item list-group-item-action");
+      pastCities.attr("href", "#")
+      pastCities.text(cityList[i])
+      $("#savedList").append(pastCities);
+      }
+    }
 
 //add click event to button
 $("#searchButton").click(function(event){
@@ -45,9 +54,8 @@ $("#searchButton").click(function(event){
 function getWeather(cityName) {
     //declare variables for city name from user input
     var cityName = $("#cityNameInput").val()
-    //cityList.push(cityName)
-   // localStorage.setItem("cityList", JSON.stringify(cityList))
-
+    savedSearch(cityName);
+   
     console.log(cityName)
     var baseUrl = "https://api.openweathermap.org/data/2.5/weather?q="
     var apiKey = "&appid=cd6b6224a3720446eb55826fcfd4a40a"
@@ -157,6 +165,17 @@ function getWeather(cityName) {
   }
 }
 
+//Function to save searched cities to local storage. Made max length of stored cities
+//6 for styling purposes, + added code to not save searched city of it already exists in storage
+function savedSearch(cityName) {
 
+  if (cityList.indexOf(cityName) == -1) {
+    cityList.unshift(cityName);
+    if(cityList.length > 6) {
+      cityList.pop();
+    }
+    localStorage["cityList"] = JSON.stringify(cityList);
+  }
+}
 
 
