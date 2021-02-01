@@ -45,8 +45,8 @@ $(document).ready(function(){
 //add click event to button
 $("#searchButton").click(function(event){
     event.preventDefault()
-    //if function to check if input field empty or not.Else statement to clear previous data from elements
-    if($("#cityNameInput").val() === '') {
+    //if function to check if input field filled + is not a number.Else statement to clear previous data from elements
+    if($("#cityNameInput").val() === '' || $.isNumeric($("#cityNameInput").val())) {
       $("#cityCurrent").addClass("hidden");
       $(".cityForecast").empty();
       $(".uvIndicator").removeClass("lowUv moderateUv highUv")
@@ -65,7 +65,7 @@ $("#searchButton").click(function(event){
 
 function getWeather(cityName) {
     //Call function to save city name to local storage
-    savedSearch(cityName);
+    
    
     console.log(cityName)
     var baseUrl = "https://api.openweathermap.org/data/2.5/weather?q="
@@ -80,6 +80,7 @@ function getWeather(cityName) {
         .then (function(data) {
           console.log(data);
           displayWeather(data, cityName);
+          savedSearch(cityName);
         })
       } else {
         $("#cityCurrent").addClass("hidden");
