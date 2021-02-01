@@ -27,3 +27,4 @@ https://github.com/nidaqg/weather-dashboard
 
 
 Attached is a link to the deployed application:
+https://nidaqg.github.io/weather-dashboard/

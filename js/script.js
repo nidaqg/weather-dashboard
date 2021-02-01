@@ -21,30 +21,13 @@ $(document).ready(function(){
     var forecastHeading = $("<p>").addClass("h3 myH1 text-center mt-2 forecastHeading");
     $("#fHeading").append(forecastHeading);
     
-    //Check to see if search history exists in local storage, retrieve if it exists
-    if(localStorage ["cityList"]) {
-      cityList = JSON.parse(localStorage.getItem("cityList"))
-    }
-    //display past searches on webpage, make displayed list clickable
-    if(cityList.length){
-      for (i=0; i < cityList.length; i++) {
-      var pastCities = $("<a>").addClass("list-group-item list-group-item-action");
-      pastCities.text(cityList[i]);
-      pastCities.click(function(event) {
-        event.preventDefault()
-        $(".cityForecast").empty()
-        $("#errorMessage").empty();
-        $(".uvIndicator").removeClass("lowUv moderateUv highUv")
-        var cityName = event.target.text
-        getWeather(cityName);
-      })
-      $("#savedList").append(pastCities);
-      }
-    }
-
+    getWeather("Philadelphia")
+    searchHistory()
+   
 //add click event to button
 $("#searchButton").click(function(event){
     event.preventDefault()
+
     //if function to check if input field filled + is not a number.Else statement to clear previous data from elements
     if($("#cityNameInput").val() === '' || $.isNumeric($("#cityNameInput").val())) {
       $("#cityCurrent").addClass("hidden");
@@ -58,15 +41,14 @@ $("#searchButton").click(function(event){
     $(".uvIndicator").removeClass("lowUv moderateUv highUv")
     var cityName = $("#cityNameInput").val()
     getWeather(cityName);
+    //searchHistory()
     }
 })
     
 });
 
 function getWeather(cityName) {
-    //Call function to save city name to local storage
     
-   
     console.log(cityName)
     var baseUrl = "https://api.openweathermap.org/data/2.5/weather?q="
     var apiKey = "&appid=cd6b6224a3720446eb55826fcfd4a40a"
@@ -81,6 +63,7 @@ function getWeather(cityName) {
           console.log(data);
           displayWeather(data, cityName);
           savedSearch(cityName);
+          searchHistory()
         })
       } else {
         $("#cityCurrent").addClass("hidden");
@@ -174,9 +157,7 @@ function getWeather(cityName) {
         $(".cityForecast").append(forecastCard);
 
     }
-    
   })
-
   }
 }
 
@@ -194,3 +175,28 @@ function savedSearch(cityName) {
 }
 }
 
+//function for getting search history data from local storage and displaying on webpage
+function searchHistory() {
+  //display past searches on webpage, make displayed list clickable
+  if(localStorage["cityList"]){
+    $("#savedList").empty()
+    cityList = JSON.parse(localStorage.getItem("cityList"))
+
+    for (i=0; i < cityList.length; i++) {
+    var pastCities = $("<a>").addClass("list-group-item list-group-item-action");
+    pastCities.text(cityList[i]);
+
+    pastCities.click(function(event) {
+      event.preventDefault()
+      $(".cityForecast").empty()
+      $("#errorMessage").empty();
+      $(".uvIndicator").removeClass("lowUv moderateUv highUv")
+      var cityName = event.target.text
+      getWeather(cityName);
+    })
+    $("#savedList").append(pastCities);
+    }
+  } else {
+    return
+  }
+}
