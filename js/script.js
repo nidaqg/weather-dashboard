@@ -41,7 +41,6 @@ $("#searchButton").click(function(event){
     $(".uvIndicator").removeClass("lowUv moderateUv highUv")
     var cityName = $("#cityNameInput").val()
     getWeather(cityName);
-    //searchHistory()
     }
 })
     
