@@ -3,7 +3,7 @@
 }
 
 .searchSection, .displaySection {
-    background-color: rgb(185, 228, 241);
+    background-color: rgb(243, 201, 174);
 }
 
 .myBtn {
@@ -12,8 +12,7 @@
 }
 
 .myBtn:hover {
-    background-color: rgb(128, 189, 207);
-    color: black;
+    background-color: rgb(8, 8, 8);
 }
 
 .lowUv {
@@ -36,4 +35,5 @@
 .hidden {
     display: none;
 }
+
 

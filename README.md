@@ -20,8 +20,6 @@ Attached are images of the weather dashboard UI:
 
 ![weather-dashboard-demo2](images/demo2.png)
 
-![weather-dashboard-demo3](images/demo3.png)
-
 Attached is a link to the GitHib repository for the project:
 https://github.com/nidaqg/weather-dashboard 
 
